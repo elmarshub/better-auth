@@ -45,7 +45,9 @@ export function SignInForm() {
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
+   const searchParams = useSearchParams();
+
+  const redirect = searchParams.get("redirect");
 
   const form = useForm<SignInValues>({
     resolver: zodResolver(signInSchema),
@@ -73,12 +75,26 @@ if(error) {
 
 } else {
   toast.success('Signed in successfully')
-  router.push('/dashboard')
+  router.push(redirect ?? "/dashboard")
 }
   }
 
   async function handleSocialSignIn(provider: "google" | "github") {
     // TODO: Handle social sign in
+
+    setError(null)
+    setLoading(true)
+    const {error} = await authClient.signIn.social({
+      provider,
+      callbackURL: redirect ?? '/dashboard'
+    })
+
+    setLoading(false)
+
+
+    if(error) {
+      setError(error.message || 'Something went wrong')
+    } 
   }
 
   return (
@@ -117,12 +133,7 @@ if(error) {
                 <FormItem>
                   <div className="flex items-center">
                     <FormLabel>Password</FormLabel>
-                    <Link
-                      href="/forgot-password"
-                      className="ml-auto inline-block text-sm underline"
-                    >
-                      Forgot your password?
-                    </Link>
+                   
                   </div>
                   <FormControl>
                     <PasswordInput

@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true
+  },
+  images: {
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: '1h3.googleusercontent.com'
+    }]
   }
 };
 

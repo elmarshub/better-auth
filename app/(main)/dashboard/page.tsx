@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,11 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { UserAvatar } from "@/components/user-avatar";
+import { User } from "@/lib/auth";
 import { getServerSession } from "@/lib/get-session";
 import { format } from "date-fns";
-import { CalendarDaysIcon, MailIcon, ShieldIcon, UserIcon } from "lucide-react";
+import { CalendarDaysIcon,  ShieldIcon, UserIcon } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { unauthorized } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -36,23 +35,21 @@ export default async function DashboardPage() {
             Welcome back! Here&apos;s your account overview.
           </p>
         </div>
-        {/* TODO: Use actual user data */}
-        <EmailVerificationAlert />
-        <ProfileInformation />
+        {/*  Use actual user data */}
+       {!user.emailVerified}
+        <ProfileInformation  user={user}/>
       </div>
     </main>
   );
 }
 
-function ProfileInformation() {
-  // TODO: Render real user info
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    image: undefined,
-    role: "admin",
-    createdAt: new Date(),
-  };
+
+interface ProfileInformationProps {
+  user: User
+}
+
+function ProfileInformation({user} : ProfileInformationProps) {
+  
 
   return (
     <Card>
@@ -103,20 +100,4 @@ function ProfileInformation() {
   );
 }
 
-function EmailVerificationAlert() {
-  return (
-    <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800/50 dark:bg-yellow-950/30">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <MailIcon className="size-5 text-yellow-600 dark:text-yellow-400" />
-          <span className="text-yellow-800 dark:text-yellow-200">
-            Please verify your email address to access all features.
-          </span>
-        </div>
-        <Button size="sm" asChild>
-          <Link href="/verify-email">Verify Email</Link>
-        </Button>
-      </div>
-    </div>
-  );
-}
+

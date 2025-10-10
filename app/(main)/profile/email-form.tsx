@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { LoadingButton } from "@/components/loading-button";
@@ -38,7 +39,9 @@ export function EmailForm({ currentEmail }: EmailFormProps) {
   });
 
   async function onSubmit(values: UpdateEmailValues) {
-    // TODO: Handle email update
+    setStatus(null)
+    setError(null)
+    
   }
 
   const loading = form.formState.isSubmitting;
