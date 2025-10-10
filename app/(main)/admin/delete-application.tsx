@@ -3,7 +3,7 @@
 import { LoadingButton } from "@/components/loading-button";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import { deleteApplication } from "./actions";
+import { deleteApplication } from "./action";
 
 export function DeleteApplication() {
   const [isPending, startTransition] = useTransition();

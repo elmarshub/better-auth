@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { EmailForm } from "./email-form";
 import { LogoutEverywhereButton } from "./logout-everywhere-button";
 import { PasswordForm } from "./password-form";
-import { ProfileDetailsForm } from "./profile-details-form";
+import { ProfileDetailsForm } from "./profile-detail-form";
 
 export const metadata: Metadata = {
   title: "Profile",
