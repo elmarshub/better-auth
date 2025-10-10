@@ -80,7 +80,7 @@ function SignOutItem() {
       toast.error(error.message || "Something went wrong")
     } else {
       toast.success('Signed out successfully')
-      router.push('/sign-in')
+      router.push('/')
     }
   }
 
