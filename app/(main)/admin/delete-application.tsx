@@ -22,10 +22,10 @@ export function DeleteApplication() {
 
   return (
     <div className="max-w-md">
-      <div className="border-red-500 bg-red-500 rounded-lg border p-4">
+      <div className=" rounded-lg border p-4 shadow-md">
         <div className="space-y-3">
           <div>
-            <h2 className="text-destructive font-medium">Delete Application</h2>
+            <h2 className="dark:text-destructive text-red-500 font-medium">Delete Application</h2>
             <p className="text-muted-foreground text-sm">
               This action will delete the entire application. This cannot be
               undone.
@@ -34,8 +34,8 @@ export function DeleteApplication() {
           <LoadingButton
             loading={isPending}
             onClick={handleDeleteApplication}
-            variant="destructive"
-            className="w-full"
+            // variant="destructive"
+            className="w-full bg-red-500 hover:bg-red-700"
           >
             Delete Application
           </LoadingButton>

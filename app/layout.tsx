@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.className} antialiased overflow-hidden`}>
+      <body className={`${outfit.className} antialiased `}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

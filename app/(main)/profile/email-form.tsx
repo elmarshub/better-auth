@@ -65,6 +65,7 @@ export function EmailForm({ currentEmail }: EmailFormProps) {
                       type="email"
                       placeholder="new@email.com"
                       {...field}
+                      disabled
                     />
                   </FormControl>
                   <FormMessage />
@@ -82,7 +83,7 @@ export function EmailForm({ currentEmail }: EmailFormProps) {
                 {status}
               </div>
             )}
-            <LoadingButton type="submit" loading={loading}>
+            <LoadingButton type="submit" loading={loading} disabled className="cursor-not-allowed">
               Request change
             </LoadingButton>
           </form>

@@ -30,16 +30,14 @@ const updateProfileSchema = z.object({
 export type UpdateProfileValues = z.infer<typeof updateProfileSchema>;
 
 interface ProfileDetailsFormPage {
-  user: User
+  user: User;
 }
 
-export function ProfileDetailsForm({user} : ProfileDetailsFormPage) {
+export function ProfileDetailsForm({ user }: ProfileDetailsFormPage) {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-
-  
 
   const form = useForm<UpdateProfileValues>({
     resolver: zodResolver(updateProfileSchema),
@@ -50,19 +48,17 @@ export function ProfileDetailsForm({user} : ProfileDetailsFormPage) {
   });
 
   async function onSubmit({ name, image }: UpdateProfileValues) {
+    setStatus(null);
+    setError(null);
 
-    setStatus(null)
-    setError(null)
+    const result = await authClient.updateUser({ name, image });
 
-    const {error} = await authClient.updateUser({name, image})
-
-    if( error ) {
-      setError(error.message || "Something went wrong")
+    if (result.error) {
+      setError(result.error.message ?? "Something went wrong");
     } else {
-      setStatus('Profile updated')
-      router.refresh()
+      setStatus("Profile updated");
+      router.refresh();
     }
-
   }
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -78,7 +74,6 @@ export function ProfileDetailsForm({user} : ProfileDetailsFormPage) {
   }
 
   const imagePreview = form.watch("image");
-
   const loading = form.formState.isSubmitting;
 
   return (
@@ -113,7 +108,10 @@ export function ProfileDetailsForm({user} : ProfileDetailsFormPage) {
                     <Input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => handleImageChange(e)}
+                      onChange={(e) => {
+                        handleImageChange(e);
+                        e.target.value = ""; // reset input for same file re-upload
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -122,11 +120,11 @@ export function ProfileDetailsForm({user} : ProfileDetailsFormPage) {
             />
 
             {imagePreview && (
-              <div className="relative size-16">
+              <div className="relative h-16 w-16 sm:h-20 sm:w-20">
                 <UserAvatar
-                  name={user.name}
+                  name={user.name ?? "User"}
                   image={imagePreview}
-                  className="size-16"
+                  className="h-full w-full rounded-full"
                 />
                 <Button
                   type="button"
@@ -141,15 +139,16 @@ export function ProfileDetailsForm({user} : ProfileDetailsFormPage) {
             )}
 
             {error && (
-              <div role="alert" className="text-sm text-red-600">
+              <p role="alert" className="text-sm font-medium text-red-600">
                 {error}
-              </div>
+              </p>
             )}
             {status && (
-              <div role="status" className="text-sm text-green-600">
+              <p role="status" className="text-sm font-medium text-green-600">
                 {status}
-              </div>
+              </p>
             )}
+
             <LoadingButton type="submit" loading={loading}>
               Save changes
             </LoadingButton>
