@@ -8,7 +8,7 @@ export default function ForbiddenPage() {
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold">403 - Forbidden</h1>
           <p className="text-muted-foreground">
-            You don&apos;t have access to this page.Try again
+            You don&apos;t have access to this page.
           </p>
         </div>
         <div>
