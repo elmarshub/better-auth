@@ -15,7 +15,6 @@ if(!user) unauthorized()
 
   if(user.role !== "admin") forbidden()
 
-  // Delete app...
 
   await setTimeout(800);
 }
